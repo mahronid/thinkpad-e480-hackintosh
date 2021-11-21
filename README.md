@@ -67,7 +67,7 @@ Both NVMe & SATA are functioning normally and TRIM is enabled for both of them.
 
 #### Bluetooth, Handoff, Airplay, Airdrop
 
-Functioning normally.
+Functioning normally, but Airdrop only from iPhone to MacOS. 
 
 #### Trackpad & Trackpoint
 
@@ -96,8 +96,11 @@ Hibernation is supported.
 
 ### Known Issue
 
-~ After waking up from sleep, there may be a problem that the battery does not quickly update after plugging in and unplugging the power supply. The temporary solution is to manually sleep the system again, and it will return to normal after waking up. 
-~ Bluetooth headphone (Ex. Airpods) sometimes disconnect/unstable connection if the distance is far (> 3 meters).
+- After waking up from sleep, there may be a problem that the battery does not quickly update after plugging in and unplugging the power supply. The temporary solution is to manually sleep the system again, and it will return to normal after waking up. <br>
+- Bluetooth headphone (Ex. Airpods) sometimes disconnect/unstable connection if the distance is far (> 3 meters). <br>
+- Airdrop only from iPhone to MacOS. 
+These problems are being solved.
+
 
 
 ## Big Thanks
