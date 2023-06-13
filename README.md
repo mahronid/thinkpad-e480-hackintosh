@@ -1,47 +1,66 @@
-# thinkpad-e480-hackintosh-monterey
-Hackintosh macOS Big Sur &amp; Monterey on ThinkPad E480
-`OpenCore 0.7.5`
+# Hackintosh Thinkpad E480 Ventura (13.4 - OC 0.9.2)
 
-Tested on:
+## Table of Contents
 
-- 11.~ Big Sur
-- 12.~ Monterey
+- [Hackintosh Thinkpad E480 Ventura (13.4 - OC 0.9.2)](#hackintosh-thinkpad-e480-ventura-134---oc-092)
+  - [Table of Contents](#table-of-contents)
+  - [Device Information](#device-information)
+  - [Usage](#usage)
+  - [What-is-working](#what-is-working)
+    - [Detailed-Device-Drivers](#detailed-device-drivers)
+      - [CPU](#cpu)
+      - [Battery](#battery)
+      - [USB](#usb)
+      - [Ethernet](#ethernet)
+      - [Display](#display)
+      - [Audio](#audio)
+      - [Keyboard](#keyboard)
+      - [SSD](#ssd)
+      - [Bluetooth](#bluetooth)
+      - [Trackpad-Trackpoint](#trackpad-trackpoint)
+      - [Wireless-Card](#wireless-card)
+      - [Integrated-Camera](#integrated-camera)
+      - [Headphone/mic combo](#headphonemic-combo)
+  - [What-is-not-working](#what-is-not-working)
+    - [Known Issue](#known-issue)
+  - [Recommended-BIOS-Config](#recommended-bios-config)
+  - [Tips](#tips)
+    - [Hibernation](#hibernation)
+  - [Support](#support)
 
-## Disclaimer
-
-I am not responsible for any loss, including but not limited to Kernel Panic, device fail to boot or can not function normally, storage damage or data loss, and so on.
-
-## Devices
-
+## Device Information
 | Specifications | Details |
 |:---|:---|
-| Computer Model | ThinkPad E480 (2018) |
-| CPU | Intel Core i5-8250U |
-| Memory | DDR4 2400 Mhz. Manually upgrade to 2x16 GB |
-| NVMe SSD | - |
-| SATA SSD | Manually change to Samsung SSD 860 EVO 1 TB |
-| Integrated Graphics | Intel UHD Graphics 620 |
-| Ethernet | RTL8168/8111/8112 Gigabit Ethernet Controller |
+| Computer Model | ThinkPad E480 |
+| CPU | Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz |
+| Model |  Lenevo 20KN|
+| Memory | 8 GB ( 2x4 Samsung DDR4 2133 MHz ) |
+| NVMe SSD | SSD M.2-SATA SK Hynix HFM128GDHTNG-8510B |
+| Integrated Graphics | Intel UHD Graphics 620 (Mobile) |
+| Ethernet |  Realtek RTL8168GU/8111GU |
 | Sound Card | Conexant CX20753/4 (layout-id: 15) |
-| Wireless Card | Manually change to BCM94352Z (DM1560) |
+| Wireless Card |  Intel(R) Wireless-AC 3165 MHz |
 
-## What is working
+
+## Usage
+
+If you have the same computer as me, you just need to replace your EFI with the EFI in the current directory. Don't forget to update your serial.
+
+## What-is-working
+
+### Detailed-Device-Drivers
 
 #### CPU
 
-XCPM power management is native supported. HWP is fully enabled as well.
+Functioning normally. Patched with CPUFriend.kext: 0.8 GHz (Min) - 3.4 GHz(Max)
 
 #### Battery
 
 The power display is functioning normally.
 
-#### Wi-Fi
-
-The OEM wireless model is `Realtek 8821CE Wireless LAN 802.11ac PCI-E NIC`. Suggest replacing it with BCM94352Z (DM1560).
-
 #### USB
 
-USB Ports Patching with HackinTool, `5 Gbps` for USB 3.0 (Dev Speed).
+USB Ports Patching with USBMap.kext.
 
 #### Ethernet
 
@@ -51,7 +70,7 @@ Functioning normally.
 
 The model of Integrated Graphics is `Intel UHD Graphics 620`, faked to `Intel HD Graphics 620`. VRAM has been set to 3072 MB.
 
-The HDMI is attached with `Intel UHD Graphics 620` and is functioning normally. `2K@60Hz` & `4K@30Hz` are supported.
+The HDMI is attached with `Intel UHD Graphics 620` and is functioning normally. `2K@60Hz & 4K@30Hz` are supported.
 
 #### Audio
 
@@ -59,32 +78,51 @@ Driven by AppleALC with `layout-id: 15`. Everything is working normally.
 
 #### Keyboard
 
-Functioning normally except the <kbd>Insert</kbd> key, which is not presented on Magic Keyboard. Keyboard backlight is working properly as well.
+Functioning normally except the <kbd>Insert</kbd> , which is not presented on Magic Keyboard.
 
 #### SSD
 
 Both NVMe & SATA are functioning normally and TRIM is enabled for both of them.
 
-#### Bluetooth, Handoff, Airplay, Airdrop
+#### Bluetooth
 
-Functioning normally, but Airdrop only from iPhone to MacOS. 
+Bluetooth functioning partially (Failed to connect on iPhone and AirPods)
 
-#### Trackpad & Trackpoint
+#### Trackpad-Trackpoint
 
-Functioning normally. Trackpoint and UltraNavs are working properly as well.
+Functioning normally.
 
-## What is not working
+#### Wireless-Card
 
-<kbd>Fn</kbd> shortcut might stop working after wake from sleep. It is a common bug happened among ThinkPad E470, E480 E490, E570, E580, E590, etc.
+Functioning normally.
 
-## Recommended BIOS Config
+#### Integrated-Camera
 
-> Make sure you have disabled Windows login password before entering the BIOS, because you might not be able to login with "PIN" on Windows after configuring your BIOS as following.
+Functioning normally.
+
+#### Headphone/mic combo
+
+Functioning normally.
+
+
+## What-is-not-working
+
+- Airdrops and Handoff Fail to work properly.
+- <kbd>Fn</kbd> shortcut might stop working after wake from sleep. It is a common bug happened among ThinkPad E470, E480 E490, E570, E580, E590, etc.
+
+### Known Issue
+
+- After waking up from sleep, there may be a problem that the battery does not quickly update after plugging in and unplugging the power supply. The temporary solution is to manually sleep the system again, and it will return to normal after waking up. <br>
+- Bluetooth headphone (Ex. Airpods) sometimes disconnect/unstable connection if the distance is far (> 3 meters). <br>
+- Airdrop only from iPhone to MacOS. 
+These problems are being solved.
+
+## Recommended-BIOS-Config
 
 - Security
-  - Intel SGX: Disabled
+  - Intel SGX: Software Controlled
 - Boot
-  - Boot Mode: Both UEFI and Legacy
+  - Boot Mode: Both UEFI and Legacy (CSM Yes)
   - Boot Priority: UEFI First
   - Quick Boot: Enabled
 
@@ -94,15 +132,8 @@ Functioning normally. Trackpoint and UltraNavs are working properly as well.
 
 Hibernation is supported.
 
-### Known Issue
 
-- After waking up from sleep, there may be a problem that the battery does not quickly update after plugging in and unplugging the power supply. The temporary solution is to manually sleep the system again, and it will return to normal after waking up. <br>
-- Bluetooth headphone (Ex. Airpods) sometimes disconnect/unstable connection if the distance is far (> 3 meters). <br>
-- Airdrop only from iPhone to MacOS. 
-These problems are being solved.
+## Support
 
-
-
-## Big Thanks
-
-**(Original) ThinkPad E480 Hackintosh** [Sukka](https://github.com/SukkaW).
+**Ventura**
+- 13.4
